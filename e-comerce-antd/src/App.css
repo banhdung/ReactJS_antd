@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 30px;
+  margin-right: 40px;
 }
 
 .pageContent {
@@ -37,6 +37,8 @@
   margin: 8px;
 }
 
-.shopingCartIcon {
-  font-size: 20px;
+.shoppingCartIcon {
+  font-size: 30px;
+
+  cursor: pointer;
 }

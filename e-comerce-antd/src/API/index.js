@@ -2,6 +2,10 @@ export const getAllProducts = () => {
   return fetch("https://dummyjson.com/products").then((res) => res.json());
 };
 
+export const getCart = () => {
+  return fetch("https://dummyjson.com/carts/user/5").then((res) => res.json());
+};
+
 export const addToCart = (id) => {
   return fetch("https://dummyjson.com/carts/add", {
     method: "POST",
