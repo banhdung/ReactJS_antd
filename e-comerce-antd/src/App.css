@@ -9,7 +9,7 @@
   height: 60px;
 }
 
-.content {
+.pageContent {
   display: flex;
   flex: 1;
   overflow-y: auto;
@@ -18,4 +18,9 @@
 .appFooter {
   height: 60px;
   background-color: black;
+}
+
+.itemCardImage {
+  height: 150px !important;
+  object-fit: scale-down;
 }
