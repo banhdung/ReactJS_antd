@@ -1,6 +1,6 @@
 import App from "../../App";
-import { Menu } from "antd";
-import { HomeOutlined } from "@ant-design/icons";
+import { Menu, Typography } from "antd";
+import { HomeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 export default function AppHeader() {
@@ -64,11 +64,13 @@ export default function AppHeader() {
             ],
           },
           {
-            label: "Accessories",
-            key: "accessories",
+            label: "Fragrances",
+            key: "fragrances",
           },
         ]}
-      ></Menu>
+      />
+      <Typography.Title>D Store</Typography.Title>
+      <ShoppingCartOutlined className="shopingCartIcon"></ShoppingCartOutlined>
     </div>
   );
 }
