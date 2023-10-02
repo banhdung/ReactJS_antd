@@ -8,8 +8,10 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <AppHeader />
-        <PageContent />
-        <AppFooter />
+        <div>
+          <PageContent />
+          <AppFooter />
+        </div>
       </BrowserRouter>
     </div>
   );

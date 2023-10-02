@@ -107,6 +107,10 @@ function AppCart() {
     });
   }, []);
 
+  const handleSearch = (value) => {
+    console.log("Từ khóa tìm kiếm:", value);
+  };
+
   const onConfirmOrder = (values) => {
     setCartDrawerOpen(false);
     setCheckoutDrawerOpen(false);
@@ -115,6 +119,12 @@ function AppCart() {
 
   return (
     <div>
+      <Input.Search
+        className="custom-search"
+        placeholder="Search Product ..."
+        enterButton
+        onSearch={handleSearch}
+      />
       <Badge
         className="badge"
         onClick={() => {

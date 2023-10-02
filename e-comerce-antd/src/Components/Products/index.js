@@ -67,6 +67,10 @@ function Products() {
       <div>
         <Typography.Text>View items sort by : </Typography.Text>
         <Select
+          defaultValue={"az"}
+          style={{
+            width: 200,
+          }}
           onChange={(value) => {
             setSortOrder(value);
           }}

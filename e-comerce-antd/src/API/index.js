@@ -27,3 +27,9 @@ export const getProductsByCategory = (category) => {
     (res) => res.json()
   );
 };
+
+export const searchProductsByName = (name) => {
+  return fetch(`https://dummyjson.com/products/search?q=${name}`).then((res) =>
+    res.json()
+  );
+};
