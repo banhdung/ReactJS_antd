@@ -11,12 +11,14 @@ import {
   Button,
   message,
   Spin,
+  Select,
 } from "antd";
 
 function Products() {
   const [loading, setLoading] = useState(false);
   const param = useParams();
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([]);
+  const [sortOrder, setSortOrder] = useState("az");
 
   useEffect(() => {
     setLoading(true);
@@ -28,14 +30,68 @@ function Products() {
       setItems(res.products);
       setLoading(false);
     });
-  }, [param]); // in Header, I use Menu have key then navigate to url 'home/key'.So key is param
+  }, [param]);
+  const getSortedItems = () => {
+    const sortedItems = [...items];
+    sortedItems.sort((a, b) => {
+      const aLowerCaseTitle = a.title.toLowerCase();
+      const bLowerCaseTitle = b.title.toLowerCase();
+
+      if (sortOrder === "az") {
+        return aLowerCaseTitle > bLowerCaseTitle
+          ? 1
+          : aLowerCaseTitle === bLowerCaseTitle
+          ? 0
+          : -1;
+      } else if (sortOrder === "za") {
+        return aLowerCaseTitle < bLowerCaseTitle
+          ? 1
+          : aLowerCaseTitle === bLowerCaseTitle
+          ? 0
+          : -1;
+      } else if (sortOrder === "lowHigh") {
+        return a.price > b.price ? 1 : a.price === b.price ? 0 : -1;
+      } else if (sortOrder === "highLow") {
+        return a.price < b.price ? 1 : a.price === b.price ? 0 : -1;
+      }
+    });
+    return sortedItems;
+  };
+  // in Header, I use Menu have key then navigate to url 'home/key'.So key is param
   if (loading) {
     return <Spin spinning />;
   }
 
   return (
-    <div>
+    <div className="productContainer">
+      <div>
+        <Typography.Text>View items sort by : </Typography.Text>
+        <Select
+          onChange={(value) => {
+            setSortOrder(value);
+          }}
+          options={[
+            {
+              label: "Sort a-z",
+              value: "az",
+            },
+            {
+              label: "Sort z-a",
+              value: "za",
+            },
+            {
+              label: "Sort price low to high",
+              value: "lowHight",
+            },
+            {
+              label: "Sort price high to low",
+              value: "highLow",
+            },
+          ]}
+        ></Select>
+      </div>
       <List
+        loading={loading}
         grid={{ column: 3 }}
         renderItem={(products, index) => {
           return (
@@ -81,8 +137,8 @@ function Products() {
             </Badge.Ribbon>
           );
         }}
-        dataSource={items}
-      />
+        dataSource={getSortedItems()}
+      ></List>
     </div>
   );
 }

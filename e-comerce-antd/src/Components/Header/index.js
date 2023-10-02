@@ -8,6 +8,9 @@ import {
   InputNumber,
   Button,
   Form,
+  Input,
+  Checkbox,
+  message,
 } from "antd";
 import {
   CarFilled,
@@ -28,6 +31,7 @@ export default function AppHeader() {
   return (
     <div className="appHeader">
       <Menu
+        className="appMenu"
         onClick={onMenuClick}
         mode="horizontal"
         items={[
@@ -102,13 +106,21 @@ function AppCart() {
       setCartItem(productsInCart);
     });
   }, []);
+
+  const onConfirmOrder = (values) => {
+    setCartDrawerOpen(false);
+    setCheckoutDrawerOpen(false);
+    message.success("Your order has been successfully");
+  };
+
   return (
     <div>
       <Badge
+        className="badge"
         onClick={() => {
           setCartDrawerOpen(true);
         }}
-        count={7}
+        count={cartItem.length}
       >
         <ShoppingCartOutlined className="shoppingCartIcon" />
       </Badge>
@@ -181,11 +193,60 @@ function AppCart() {
           setCheckoutDrawerOpen(false);
         }}
         title="Confirm Order"
-      ></Drawer>
+      >
+        <Form onFinish={onConfirmOrder}>
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Pls enter your full name",
+              },
+            ]}
+            label="Full Name"
+            name="fullName"
+          >
+            <Input placeholder="Enter your full name"></Input>
+          </Form.Item>
 
-      <Form>
-        <Form.Item></Form.Item>
-      </Form>
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                type: "email",
+                message: "Pls enter valid email",
+              },
+            ]}
+            label="Email"
+            name="email"
+          >
+            <Input placeholder="Enter your email"></Input>
+          </Form.Item>
+
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Pls enter your address",
+              },
+            ]}
+            label="Address"
+            name="address"
+          >
+            <Input placeholder="Enter your address"></Input>
+          </Form.Item>
+          <Form.Item>
+            <Checkbox defaultChecked disabled>
+              Cart on Delivery
+            </Checkbox>
+          </Form.Item>
+          <Typography.Paragraph type="secondary">
+            More methods coming soon
+          </Typography.Paragraph>
+          <Button type="primary" htmlType="submit">
+            Confirm Order
+          </Button>
+        </Form>
+      </Drawer>
     </div>
   );
 }
