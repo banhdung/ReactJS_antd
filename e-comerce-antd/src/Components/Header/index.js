@@ -17,7 +17,7 @@ import {
   HomeOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCart } from "../../API";
 import Title from "antd/es/skeleton/Title";
@@ -99,6 +99,8 @@ function AppCart() {
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const [cartItem, setCartItem] = useState([]);
   const [checkoutDrawerOpen, setCheckoutDrawerOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCart().then((res) => {
@@ -108,7 +110,7 @@ function AppCart() {
   }, []);
 
   const handleSearch = (value) => {
-    console.log("Từ khóa tìm kiếm:", value);
+    navigate(`/search?q=${value}`);
   };
 
   const onConfirmOrder = (values) => {
@@ -123,7 +125,7 @@ function AppCart() {
         className="custom-search"
         placeholder="Search Product ..."
         enterButton
-        onSearch={handleSearch}
+        onSearch={(e) => handleSearch(e)}
       />
       <Badge
         className="badge"

@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
-import { addToCart, getAllProducts, getProductsByCategory } from "../../API";
-import { useParams } from "react-router-dom";
+import {
+  addToCart,
+  getAllProducts,
+  getProductsByCategory,
+  searchProductsByName,
+} from "../../API";
+import { useLocation, useParams } from "react-router-dom";
 import {
   Badge,
   List,
@@ -19,18 +24,39 @@ function Products() {
   const param = useParams();
   const [items, setItems] = useState([]);
   const [sortOrder, setSortOrder] = useState("az");
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search).get("q");
 
   useEffect(() => {
     setLoading(true);
-
-    (param?.categoryId
-      ? getProductsByCategory(param.categoryId)
-      : getAllProducts()
-    ).then((res) => {
-      setItems(res.products);
-      setLoading(false);
-    });
+    if (searchParams) {
+      searchProductsByName(searchParams).then((res) => {
+        setItems(res.products);
+        setLoading(false);
+      });
+    } else if (param && param.categoryId) {
+      getProductsByCategory(param.categoryId)
+        .then((res) => {
+          setItems(res.products);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error retrieving products by category:", error);
+          setLoading(false);
+        });
+    } else {
+      getAllProducts()
+        .then((res) => {
+          setItems(res.products);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error retrieving all products:", error);
+          setLoading(false);
+        });
+    }
   }, [param]);
+
   const getSortedItems = () => {
     const sortedItems = [...items];
     sortedItems.sort((a, b) => {
