@@ -119,6 +119,10 @@ function AppCart() {
     message.success("Your order has been successfully");
   };
 
+  const handleLoginClick = () => {
+    navigate("/login"); // Điều hướng đến trang login
+  };
+
   return (
     <div>
       <Input.Search
@@ -127,6 +131,18 @@ function AppCart() {
         enterButton
         onSearch={(e) => handleSearch(e)}
       />
+      <Button
+        onClick={handleLoginClick}
+        type="primary"
+        style={{
+          background: "#f0f0f0",
+          color: "#333",
+          border: "none",
+          margin: "0px 30px 10px 0px",
+        }}
+      >
+        Login
+      </Button>
       <Badge
         className="badge"
         onClick={() => {
@@ -136,6 +152,7 @@ function AppCart() {
       >
         <ShoppingCartOutlined className="shoppingCartIcon" />
       </Badge>
+
       <Drawer
         open={cartDrawerOpen}
         onClose={() => {
